@@ -1,0 +1,79 @@
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" >
+    
+	<parent>
+		<groupId>com.gokhantamkoc.grpc.greeting</groupId>
+		<artifactId>grpc-greeting</artifactId>
+		<version>1.0.0</version>
+	</parent>
+    
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>server</artifactId>
+	<packaging>jar</packaging>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>17</java.version>
+		<hikaricp.version>2.6.3</hikaricp.version>
+		<postgres.version>9.4-1200-jdbc41</postgres.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.gokhantamkoc.grpc.greeting</groupId>
+			<artifactId>common</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+		</dependency>
+	</dependencies>
+	<build>
+		<finalName>grpc-greeting-server</finalName>
+		<resources>
+			<resource>
+				<filtering>true</filtering>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>com.gokhantamkoc.grpc.greeting.server.boot.GrpcBoot</mainClass>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.0</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<compilerArgument>-deprecation</compilerArgument>
+					<compilerArgument>-Xlint:unchecked</compilerArgument>
+					<compilerArgument>-Xlint:deprecation</compilerArgument>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

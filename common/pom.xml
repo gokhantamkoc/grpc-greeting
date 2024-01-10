@@ -1,0 +1,97 @@
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" >
+    
+	<parent>
+		<groupId>com.gokhantamkoc.grpc.greeting</groupId>
+		<artifactId>grpc-greeting</artifactId>
+		<version>1.0.0</version>
+	</parent>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>17</java.version>
+		<grpc.version>1.60.1</grpc.version>
+	</properties>
+
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>common</artifactId>
+	<packaging>jar</packaging>
+
+	<dependencies>
+		<dependency>
+			<groupId>io.grpc</groupId>
+			<artifactId>grpc-netty-shaded</artifactId>
+			<version>${grpc.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.grpc</groupId>
+			<artifactId>grpc-protobuf</artifactId>
+			<version>${grpc.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.grpc</groupId>
+			<artifactId>grpc-stub</artifactId>
+			<version>${grpc.version}</version>
+		</dependency>
+
+		<!-- workaround for missing javax.annotation.Generated Annotation -->
+		<!-- need to find a better solution -->
+		<!-- <dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>javax.annotation-api</artifactId>
+			<version>1.2</version>
+		</dependency> -->
+	</dependencies>
+	<build>
+		<finalName>grpc-common</finalName>
+		<extensions>
+			<extension>
+				<groupId>kr.motd.maven</groupId>
+				<artifactId>os-maven-plugin</artifactId>
+				<version>1.5.0.Final</version>
+			</extension>
+		</extensions>
+		<plugins>			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.5.1</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.xolstice.maven.plugins</groupId>
+				<artifactId>protobuf-maven-plugin</artifactId>
+				<version>0.6.1</version>
+				<extensions>true</extensions>
+				<executions>
+					<execution>
+						<goals>
+						<goal>compile</goal>
+						<goal>test-compile</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<protocArtifact>com.google.protobuf:protoc:3.7.0:exe:${os.detected.classifier}</protocArtifact>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
